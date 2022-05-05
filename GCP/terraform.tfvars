@@ -1,0 +1,5 @@
+project_name    = "Cloud Strategy POC"
+project_id      = "cloud-strategy-poc"
+billing_account = "01A63F-2ECA56-AD8527"
+region          = "europe-west6"
+zone            = "europe-west6-a"
