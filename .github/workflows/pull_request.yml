@@ -23,15 +23,15 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.working-directory }}
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.working-directory }}
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.working-directory }}
   check-aws-cloud-infrastructure:
     name: Check AWS Cloud Infrastructure
     runs-on: ubuntu-latest
@@ -45,12 +45,12 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.working-directory }}
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.working-directory }}
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.working-directory }}
