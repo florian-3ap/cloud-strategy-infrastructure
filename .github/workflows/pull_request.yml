@@ -1,4 +1,4 @@
-name: Plan Cloud Infrastructure Provisioning
+name: Check Infrastructure
 
 on:
   pull_request:
