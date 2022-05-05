@@ -1,0 +1,34 @@
+name: Plan Cloud Infrastructure Provisioning
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+concurrency:
+  group: ci-pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-gcp-cloud-infrastructure:
+    name: Check GCP Cloud Infrastructure
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./GCP
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: ${{ env.WORKING_DIRECTORY }}
