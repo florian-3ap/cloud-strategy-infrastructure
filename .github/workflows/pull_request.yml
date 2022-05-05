@@ -3,7 +3,7 @@ name: Plan Cloud Infrastructure Provisioning
 on:
   pull_request:
     branches:
-      - develop
+      - main
 
 concurrency:
   group: ci-pr-${{ github.ref }}
@@ -33,7 +33,7 @@ jobs:
         run: terraform validate -no-color
         working-directory: ${{ env.WORKING_DIRECTORY }}
   check-aws-cloud-infrastructure:
-    name: Check GCP Cloud Infrastructure
+    name: Check AWS Cloud Infrastructure
     runs-on: ubuntu-latest
     env:
       working-directory: ./AWS
