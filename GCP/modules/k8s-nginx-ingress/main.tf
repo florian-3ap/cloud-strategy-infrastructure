@@ -24,7 +24,7 @@ resource "helm_release" "ingress_nginx_chart" {
     value = "Local"
   }
 
-  depends_on = [var.kubernetes_cluster]
+  depends_on = [var.kubernetes_cluster, var.kubernetes_cluster_primary_nodes]
 }
 
 resource "kubectl_manifest" "ingress_configmap" {

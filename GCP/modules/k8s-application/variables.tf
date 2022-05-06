@@ -1,8 +1,3 @@
-variable "project_id" {
-  description = "Project ID"
-  type        = string
-}
-
 variable "kubernetes_cluster" {
   description = "K8s Cluster"
 }
@@ -16,6 +11,6 @@ variable "ip_address" {
   type        = string
 }
 
-variable "services" {
-  description = "A list of the services that should be routed by ingress."
+variable "cloud_sql_instance_name" {
+  description = "Name of cloud sql instance"
 }

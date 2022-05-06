@@ -41,20 +41,29 @@ module "cloud_sql" {
 module "nginx-ingress" {
   source = "./modules/k8s-nginx-ingress"
 
-  project_id         = var.project_id
-  ip_address         = module.vpc.ip_address
-  kubernetes_cluster = module.gke.kubernetes_cluster
+  project_id                       = var.project_id
+  ip_address                       = module.vpc.ip_address
+  kubernetes_cluster               = module.gke.kubernetes_cluster
+  kubernetes_cluster_primary_nodes = module.gke.kubernetes_cluster_primary_nodes
 
   services = [
-    {
-      name : "show-case-ui",
-      port : 80,
-      path : "/api",
-    },
     {
       name : "person-management-service",
       port : 8080,
       path : "/person-management-service",
     },
+    {
+      name : "show-case-ui",
+      port : 3000,
+      path : "/",
+    }
   ]
+}
+
+module "show-case-ui" {
+  source = "./modules/k8s-application"
+
+  kubernetes_cluster               = module.gke.kubernetes_cluster
+  kubernetes_cluster_primary_nodes = module.gke.kubernetes_cluster_primary_nodes
+  cloud_sql_instance_name          = module.cloud_sql.cloud_sql_instance
 }

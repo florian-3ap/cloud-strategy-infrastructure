@@ -8,6 +8,12 @@ resource "google_container_cluster" "primary" {
 
   network    = var.vpc_network_name
   subnetwork = var.vpc_subnet_name
+
+  master_auth {
+    client_certificate_config {
+      issue_client_certificate = false
+    }
+  }
 }
 
 resource "google_container_node_pool" "primary_nodes" {
@@ -19,8 +25,7 @@ resource "google_container_node_pool" "primary_nodes" {
 
   node_config {
     oauth_scopes = [
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/cloud-platform",
     ]
 
     labels = {
@@ -28,7 +33,7 @@ resource "google_container_node_pool" "primary_nodes" {
     }
 
     machine_type = var.machine_type
-    tags         = ["gke-node", "${var.project_id}-gke"]
+    tags         = ["gke-node", google_container_cluster.primary.name]
     metadata     = {
       disable-legacy-endpoints = "true"
     }
