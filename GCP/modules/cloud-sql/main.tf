@@ -46,4 +46,6 @@ resource "kubernetes_secret" "db_root_user_secret" {
     username = google_sql_user.project_user.name
     password = google_sql_user.project_user.password
   }
+
+  depends_on = [var.kubernetes_cluster]
 }
