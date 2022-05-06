@@ -47,14 +47,14 @@ module "nginx-ingress" {
 
   services = [
     {
-      name : "gateway-service",
-      port : 8080,
+      name : "show-case-ui",
+      port : 80,
       path : "/api",
     },
     {
-      name : "enge-storybook-service",
-      port : 80,
-      path : "/storybook",
+      name : "person-management-service",
+      port : 8080,
+      path : "/person-management-service",
     },
   ]
 }
