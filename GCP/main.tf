@@ -65,5 +65,6 @@ module "show-case-ui" {
 
   kubernetes_cluster               = module.gke.kubernetes_cluster
   kubernetes_cluster_primary_nodes = module.gke.kubernetes_cluster_primary_nodes
+  ip_address                       = module.vpc.ip_address
   cloud_sql_instance_name          = module.cloud_sql.cloud_sql_instance
 }

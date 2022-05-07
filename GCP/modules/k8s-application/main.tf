@@ -22,7 +22,7 @@ resource "kubernetes_deployment" "show-case-ui-deployment" {
       spec {
         container {
           name  = "show-case-ui"
-          image = "mandlon/show-case-ui:0.1.0-ba577ef1e3934843c357741306a0113405cf5092"
+          image = "mandlon/show-case-ui:0.1.0-f2b700adb3e4ac0b3af7cc01b688c11774a94507"
 
           port {
             container_port = 3000
@@ -57,14 +57,14 @@ resource "kubernetes_deployment" "show-case-ui-deployment" {
 
           env {
             name  = "REACT_APP_BASE_URL"
-            value = "http://${var.ip_address}:8080"
+            value = "http://${var.ip_address}"
           }
         }
       }
     }
   }
 
-  depends_on = [var.kubernetes_cluster, var.kubernetes_cluster_primary_nodes]
+  depends_on = [var.kubernetes_cluster, var.kubernetes_cluster_primary_nodes, var.ip_address]
 }
 
 resource "kubernetes_service" "show-case-ui-service" {
@@ -109,7 +109,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
       spec {
         container {
           name  = "person-management-service"
-          image = "mandlon/person-management-service:0.0.1-SNAPSHOT-ba577ef1e3934843c357741306a0113405cf5092"
+          image = "mandlon/person-management-service:0.0.1-SNAPSHOT-f2b700adb3e4ac0b3af7cc01b688c11774a94507"
 
           port {
             container_port = 8080
@@ -124,18 +124,24 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
 
           readiness_probe {
             http_get {
-              path   = "/actuator/health/readiness"
+              path   = "/person-management-service/actuator/health/readiness"
               port   = 8080
               scheme = "HTTP"
             }
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
           }
 
           liveness_probe {
             http_get {
-              path   = "/actuator/health/liveness"
+              path   = "/person-management-service/actuator/health/liveness"
               port   = 8080
               scheme = "HTTP"
             }
+            initial_delay_seconds = 100
+            period_seconds        = 20
+            timeout_seconds       = 5
           }
 
           env {

@@ -62,7 +62,6 @@ resource "kubernetes_ingress" "ingress" {
       "nginx.ingress.kubernetes.io/proxy-read-timeout"    = "180"
       "nginx.ingress.kubernetes.io/proxy-send-timeout"    = "180"
       "nginx.ingress.kubernetes.io/enable-cors"           = "true"
-      "nginx.ingress.kubernetes.io/cors-allow-origin"     = "http://localhost:3000"
       "nginx.ingress.kubernetes.io/use-regex"             = "true"
     }
   }
