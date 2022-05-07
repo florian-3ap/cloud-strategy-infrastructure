@@ -29,3 +29,8 @@ module "vpc" {
     "kubernetes.io/role/internal-elb"           = "1"
   }
 }
+
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "rds_subnet_group"
+  subnet_ids = module.vpc.public_subnets
+}

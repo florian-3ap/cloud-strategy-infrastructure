@@ -5,3 +5,11 @@ output "vpc_id" {
 output "private_subnets" {
   value = module.vpc.private_subnets
 }
+
+output "public_subnets" {
+  value = module.vpc.public_subnets
+}
+
+output "rds_subnet_group_name" {
+  value = aws_db_subnet_group.rds_subnet_group.name
+}

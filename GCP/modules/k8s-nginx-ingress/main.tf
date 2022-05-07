@@ -1,3 +1,17 @@
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.11.0"
+    }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.14.0"
+    }
+  }
+  required_version = ">= 0.14"
+}
+
 resource "helm_release" "ingress_nginx_chart" {
   name       = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx/"
@@ -23,8 +37,6 @@ resource "helm_release" "ingress_nginx_chart" {
     name  = "controller.service.externalTrafficPolicy"
     value = "Local"
   }
-
-  depends_on = [var.kubernetes_cluster, var.kubernetes_cluster_primary_nodes]
 }
 
 resource "kubectl_manifest" "ingress_configmap" {

@@ -1,3 +1,17 @@
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.11.0"
+    }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.14.0"
+    }
+  }
+  required_version = ">= 0.14"
+}
+
 resource "kubernetes_deployment" "show-case-ui-deployment" {
   metadata {
     name = "show-case-ui"
@@ -63,8 +77,6 @@ resource "kubernetes_deployment" "show-case-ui-deployment" {
       }
     }
   }
-
-  depends_on = [var.kubernetes_cluster, var.kubernetes_cluster_primary_nodes, var.ip_address]
 }
 
 resource "kubernetes_service" "show-case-ui-service" {
@@ -187,10 +199,6 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
       }
     }
   }
-
-  depends_on = [
-    var.kubernetes_cluster, var.kubernetes_cluster_primary_nodes, var.cloud_sql_instance_name
-  ]
 }
 
 resource "kubernetes_service" "person-management-service" {
