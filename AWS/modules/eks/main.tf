@@ -17,11 +17,7 @@ module "eks" {
       instance_type                 = "t2.small"
       additional_userdata           = "echo foo bar"
       additional_security_group_ids = [var.worker_group_mgmt_id]
-      asg_desired_capacity          = 2
+      asg_desired_capacity          = 1
     }
-  ]
-
-  depends_on = [
-    var.cluster_name, var.vpc_id, var.subnets, var.worker_group_mgmt_id
   ]
 }

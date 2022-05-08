@@ -45,23 +45,10 @@ module "cloud_sql_user" {
 }
 
 module "nginx-ingress" {
-  source = "./modules/k8s-nginx-ingress"
+  source = "../modules/k8s-nginx-ingress"
 
   project_id = var.project_id
   ip_address = module.vpc.ip_address
-
-  services = [
-    {
-      name : "person-management-service",
-      port : 8080,
-      path : "/person-management-service",
-    },
-    {
-      name : "show-case-ui",
-      port : 3000,
-      path : "/",
-    }
-  ]
 
   depends_on = [
     module.vpc.ip_address,
@@ -71,7 +58,7 @@ module "nginx-ingress" {
 }
 
 module "k8s-application" {
-  source = "./modules/k8s-application"
+  source = "../modules/k8s-application"
 
   ip_address              = module.vpc.ip_address
   cloud_sql_instance_name = module.cloud_sql.cloud_sql_instance_name

@@ -19,16 +19,6 @@ resource "helm_release" "ingress_nginx_chart" {
   version    = "4.1.0"
 
   set {
-    name  = "rbac.create"
-    value = "true"
-  }
-
-  set {
-    name  = "controller.publishService.enabled"
-    value = "true"
-  }
-
-  set {
     name  = "controller.service.loadBalancerIP"
     value = var.ip_address
   }
@@ -63,7 +53,7 @@ YAML
   depends_on = [helm_release.ingress_nginx_chart]
 }
 
-resource "kubernetes_ingress" "ingress" {
+resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name        = "${var.project_id}-nginx-ingress"
     annotations = {
@@ -80,20 +70,24 @@ resource "kubernetes_ingress" "ingress" {
   spec {
     rule {
       http {
-        dynamic "path" {
+        dynamic path {
           for_each = var.services
           iterator = service
-
           content {
             path = service.value.path
             backend {
-              service_name = service.value.name
-              service_port = service.value.port
+              service {
+                name = service.value.name
+                port {
+                  number = service.value.port
+                }
+              }
             }
           }
         }
       }
     }
+
   }
 
   depends_on = [kubectl_manifest.ingress_configmap]
