@@ -17,7 +17,3 @@ variable "vpc_id" {
 variable "subnets" {
   description = "VPC subnets"
 }
-
-variable "worker_group_mgmt_id" {
-  description = "Worker group mgmt id"
-}

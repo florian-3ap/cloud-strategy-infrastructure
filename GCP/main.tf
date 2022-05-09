@@ -44,30 +44,32 @@ module "cloud_sql_user" {
   depends_on = [module.cloud_sql.cloud_sql_instance_name]
 }
 
-module "nginx-ingress" {
-  source = "../modules/k8s-nginx-ingress"
+module "k8s-application" {
+  source = "../modules/k8s-application"
 
-  project_id = var.project_id
-  ip_address = module.vpc.ip_address
+  show-case-ui-config = {
+    base_path = module.vpc.ip_address
+  }
+  person-management-config = {
+    db_jdbc_url = "jdbc:postgresql://localhost:5432/${module.cloud_sql.database_name}"
+  }
+
+  cloud_sql_proxy_enabled = true
+  cloud_sql_instance_name = module.cloud_sql.cloud_sql_instance_name
 
   depends_on = [
-    module.vpc.ip_address,
+    module.cloud_sql,
+    module.cloud_sql_user,
     module.gke.kubernetes_cluster,
     module.gke.kubernetes_cluster_primary_nodes
   ]
 }
 
-module "k8s-application" {
-  source = "../modules/k8s-application"
+module "k8s-nginx-ingress" {
+  source = "../modules/k8s-nginx-ingress"
 
-  ip_address              = module.vpc.ip_address
-  cloud_sql_instance_name = module.cloud_sql.cloud_sql_instance_name
+  project_id = var.project_id
+  ip_address = module.vpc.ip_address
 
-  depends_on = [
-    module.vpc.ip_address,
-    module.gke.kubernetes_cluster,
-    module.gke.kubernetes_cluster_primary_nodes,
-    module.cloud_sql.cloud_sql_instance_name,
-    module.cloud_sql_user
-  ]
+  depends_on = [module.k8s-application]
 }

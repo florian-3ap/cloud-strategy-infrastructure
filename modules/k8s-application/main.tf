@@ -12,7 +12,7 @@ terraform {
   required_version = ">= 0.14"
 }
 
-resource "kubernetes_deployment" "show-case-ui-deployment" {
+resource "kubernetes_deployment_v1" "show-case-ui-deployment" {
   metadata {
     name = "show-case-ui"
   }
@@ -71,7 +71,7 @@ resource "kubernetes_deployment" "show-case-ui-deployment" {
 
           env {
             name  = "REACT_APP_BASE_URL"
-            value = "http://${var.ip_address}"
+            value = "http://${var.show-case-ui-config.base_path}"
           }
         }
       }
@@ -79,7 +79,7 @@ resource "kubernetes_deployment" "show-case-ui-deployment" {
   }
 }
 
-resource "kubernetes_service" "show-case-ui-service" {
+resource "kubernetes_service_v1" "show-case-ui-service" {
   metadata {
     name = "show-case-ui"
   }
@@ -94,10 +94,10 @@ resource "kubernetes_service" "show-case-ui-service" {
     }
   }
 
-  depends_on = [kubernetes_deployment.show-case-ui-deployment]
+  depends_on = [kubernetes_deployment_v1.show-case-ui-deployment]
 }
 
-resource "kubernetes_deployment" "person-management-service-deployment" {
+resource "kubernetes_deployment_v1" "person-management-service-deployment" {
   metadata {
     name = "person-management-service"
   }
@@ -158,7 +158,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
 
           env {
             name  = "DB_JDBC_URL"
-            value = "jdbc:postgresql://localhost:5432/cloud-strategy-poc"
+            value = var.person-management-config.db_jdbc_url
           }
           env {
             name = "DB_USERNAME"
@@ -179,21 +179,25 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
             }
           }
         }
-        container {
-          name  = "cloud-sql-proxy"
-          image = "gcr.io/cloudsql-docker/gce-proxy:1.30.0"
+        dynamic container {
+          for_each = var.cloud_sql_proxy_enabled ? [1] : []
+          content {
+            name  = "cloud-sql-proxy"
+            image = "gcr.io/cloudsql-docker/gce-proxy:1.30.0"
 
-          command = [
-            "/cloud_sql_proxy", "-instances=$(CLOUDSQL_INSTANCE)=tcp:5432", "-log_debug_stdout=true"
-          ]
+            command = [
+              "/cloud_sql_proxy", "-instances=$(CLOUDSQL_INSTANCE)=tcp:5432",
+              "-log_debug_stdout=true"
+            ]
 
-          env {
-            name  = "CLOUDSQL_INSTANCE"
-            value = "cloud-strategy-poc:europe-west6:${var.cloud_sql_instance_name}"
-          }
+            env {
+              name  = "CLOUDSQL_INSTANCE"
+              value = "cloud-strategy-poc:europe-west6:${var.cloud_sql_instance_name}"
+            }
 
-          security_context {
-            run_as_non_root = true
+            security_context {
+              run_as_non_root = true
+            }
           }
         }
       }
@@ -201,7 +205,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
   }
 }
 
-resource "kubernetes_service" "person-management-service" {
+resource "kubernetes_service_v1" "person-management-service" {
   metadata {
     name = "person-management-service"
   }
@@ -216,5 +220,5 @@ resource "kubernetes_service" "person-management-service" {
     }
   }
 
-  depends_on = [kubernetes_deployment.person-management-service-deployment]
+  depends_on = [kubernetes_deployment_v1.person-management-service-deployment]
 }

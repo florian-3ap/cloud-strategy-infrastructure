@@ -18,15 +18,14 @@ resource "helm_release" "ingress_nginx_chart" {
   chart      = "ingress-nginx"
   version    = "4.1.0"
 
-  set {
-    name  = "controller.service.loadBalancerIP"
-    value = var.ip_address
-  }
-
-  set {
-    name  = "controller.service.externalTrafficPolicy"
-    value = "Local"
-  }
+  values = [
+    <<-EOF
+    controller:
+      service:
+        loadBalancerIP: ${var.ip_address}
+        externalTrafficPolicy: Local
+    EOF
+  ]
 }
 
 resource "kubectl_manifest" "ingress_configmap" {
