@@ -29,3 +29,18 @@ gcloud projects add-iam-policy-binding cloud-strategy-poc --member serviceAccoun
 ```
 gcloud iam service-accounts keys create access.json --iam-account=tf-cicd@cloud-strategy-poc.iam.gserviceaccount.com
 ```
+
+### Create Bucket for storing Terraform State
+
+```
+gsutil mb -p cloud-strategy-poc -c Standard -l europe-west6 -b on gs://cloud-strategy-poc-terraform-state
+```
+
+## AWS initial setup
+
+### Create Bucket for storing Terraform State
+
+```
+aws s3api create-bucket --bucket "cloud-strategy-poc-terraform-state" --region "eu-central-1" --create-bucket-configuration LocationConstraint="eu-central-1"
+```
+

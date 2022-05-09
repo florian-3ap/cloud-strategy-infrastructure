@@ -7,6 +7,8 @@ module "eks" {
   vpc_id          = var.vpc_id
   subnets         = var.subnets
 
+  write_kubeconfig = false
+
   workers_group_defaults = {
     root_volume_type = "gp2"
   }

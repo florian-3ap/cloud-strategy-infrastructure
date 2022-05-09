@@ -12,7 +12,7 @@ terraform {
   required_version = ">= 0.14"
 }
 
-resource "kubernetes_deployment_v1" "show-case-ui-deployment" {
+resource "kubernetes_deployment" "show-case-ui-deployment" {
   metadata {
     name = "show-case-ui"
   }
@@ -47,10 +47,6 @@ resource "kubernetes_deployment_v1" "show-case-ui-deployment" {
               cpu    = "25m"
               memory = "150Mi"
             }
-            limits = {
-              cpu    = "100m"
-              memory = "300Mi"
-            }
           }
 
           readiness_probe {
@@ -79,7 +75,7 @@ resource "kubernetes_deployment_v1" "show-case-ui-deployment" {
   }
 }
 
-resource "kubernetes_service_v1" "show-case-ui-service" {
+resource "kubernetes_service" "show-case-ui-service" {
   metadata {
     name = "show-case-ui"
   }
@@ -94,10 +90,10 @@ resource "kubernetes_service_v1" "show-case-ui-service" {
     }
   }
 
-  depends_on = [kubernetes_deployment_v1.show-case-ui-deployment]
+  depends_on = [kubernetes_deployment.show-case-ui-deployment]
 }
 
-resource "kubernetes_deployment_v1" "person-management-service-deployment" {
+resource "kubernetes_deployment" "person-management-service-deployment" {
   metadata {
     name = "person-management-service"
   }
@@ -205,7 +201,7 @@ resource "kubernetes_deployment_v1" "person-management-service-deployment" {
   }
 }
 
-resource "kubernetes_service_v1" "person-management-service" {
+resource "kubernetes_service" "person-management-service" {
   metadata {
     name = "person-management-service"
   }
@@ -220,5 +216,5 @@ resource "kubernetes_service_v1" "person-management-service" {
     }
   }
 
-  depends_on = [kubernetes_deployment_v1.person-management-service-deployment]
+  depends_on = [kubernetes_deployment.person-management-service-deployment]
 }
