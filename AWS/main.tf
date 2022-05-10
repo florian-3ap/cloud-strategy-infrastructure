@@ -17,8 +17,8 @@ module "security_group" {
   vpc_id = module.vpc.vpc_id
 }
 
-module "eks" {
-  source = "./modules/eks"
+module "k8s_cluster" {
+  source = "modules/k8s-cluster"
 
   cluster_name = local.cluster_name
   vpc_id       = module.vpc.vpc_id
@@ -33,10 +33,10 @@ module "rds" {
   db_subnet_group_name   = module.vpc.rds_subnet_group_name
   vpc_security_group_ids = [module.security_group.rds_security_group_id]
 
-  depends_on = [module.vpc, module.security_group, module.eks]
+  depends_on = [module.vpc, module.security_group, module.k8s_cluster]
 }
 
-module "k8s-application" {
+module "k8s_application" {
   source = "../modules/k8s-application"
 
   show-case-ui-config = {
@@ -47,7 +47,7 @@ module "k8s-application" {
     db_jdbc_url = "jdbc:postgresql://${module.rds.rds_address}:${module.rds.port}/${module.rds.db_name}"
   }
 
-  depends_on = [module.vpc.ip_address, module.eks, module.rds]
+  depends_on = [module.vpc.ip_address, module.k8s_cluster, module.rds]
 }
 
 #module "k8s-nginx-ingress" {
