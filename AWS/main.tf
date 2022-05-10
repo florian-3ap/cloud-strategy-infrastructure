@@ -18,7 +18,7 @@ module "security_group" {
 }
 
 module "k8s_cluster" {
-  source = "modules/k8s-cluster"
+  source = "./modules/k8s-cluster"
 
   cluster_name = local.cluster_name
   vpc_id       = module.vpc.vpc_id

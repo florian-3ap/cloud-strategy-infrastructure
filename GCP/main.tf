@@ -14,7 +14,7 @@ module "vpc" {
 }
 
 module "k8s_cluster" {
-  source = "modules/k8s-cluster"
+  source = "./modules/k8s-cluster"
 
   project_id       = var.project_id
   region           = var.region
