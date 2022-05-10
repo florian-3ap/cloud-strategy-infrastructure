@@ -1,6 +1,6 @@
 # cloud-strategy-infrastructure
 
-## GCP Setup
+## GCP Initial Setup
 
 ### Create project
 
@@ -36,7 +36,7 @@ gcloud iam service-accounts keys create access.json --iam-account=tf-cicd@cloud-
 gsutil mb -p cloud-strategy-poc -c Standard -l europe-west6 -b on gs://cloud-strategy-poc-terraform-state
 ```
 
-## AWS initial setup
+## AWS Initial Setup
 
 ### Create Bucket for storing Terraform State
 
@@ -44,3 +44,10 @@ gsutil mb -p cloud-strategy-poc -c Standard -l europe-west6 -b on gs://cloud-str
 aws s3api create-bucket --bucket "cloud-strategy-poc-terraform-state" --region "eu-central-1" --create-bucket-configuration LocationConstraint="eu-central-1"
 ```
 
+## Azure Initial Setup
+
+### Create Bucket for storing Terraform State
+
+```
+az group create --name $RESOURCE_GROUP_NAME --location eastus
+```

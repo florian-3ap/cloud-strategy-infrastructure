@@ -94,6 +94,7 @@ resource "kubernetes_service" "show-case-ui-service" {
 }
 
 resource "kubernetes_deployment" "person-management-service-deployment" {
+  wait_for_rollout = false
   metadata {
     name = "person-management-service"
   }

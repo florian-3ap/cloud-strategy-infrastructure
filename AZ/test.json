@@ -1,0 +1,325 @@
+{
+  "version": 4,
+  "terraform_version": "1.1.9",
+  "serial": 884,
+  "lineage": "e30f7899-7299-be7a-8b73-4916faec6563",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "azurerm_public_ip",
+      "name": "nginx_ingress",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "allocation_method": "Static",
+            "domain_name_label": "cloud-strategy-poc",
+            "edge_zone": "",
+            "fqdn": "cloud-strategy-poc.westeurope.cloudapp.azure.com",
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/MC_cloud-strategy-poc_cloud-strategy-poc-aks_westeurope/providers/Microsoft.Network/publicIPAddresses/nginx_ingress_public_ip",
+            "idle_timeout_in_minutes": 4,
+            "ip_address": "20.224.144.217",
+            "ip_tags": {},
+            "ip_version": "IPv4",
+            "location": "westeurope",
+            "name": "nginx_ingress_public_ip",
+            "public_ip_prefix_id": null,
+            "resource_group_name": "MC_cloud-strategy-poc_cloud-strategy-poc-aks_westeurope",
+            "reverse_fqdn": "",
+            "sku": "Standard",
+            "sku_tier": "Regional",
+            "tags": {},
+            "timeouts": null,
+            "zones": []
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_kubernetes_cluster.aks",
+            "azurerm_resource_group.rg",
+            "module.virtual_network.azurerm_subnet.aks_pods",
+            "module.virtual_network.azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "rg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc",
+            "location": "westeurope",
+            "name": "cloud-strategy-poc",
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo1NDAwMDAwMDAwMDAwLCJkZWxldGUiOjU0MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjo1NDAwMDAwMDAwMDAwfX0="
+        }
+      ]
+    },
+    {
+      "module": "module.virtual_network",
+      "mode": "managed",
+      "type": "azurerm_network_security_group",
+      "name": "default",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/networkSecurityGroups/cloud-strategy-poc-nsg",
+            "location": "westeurope",
+            "name": "cloud-strategy-poc-nsg",
+            "resource_group_name": "cloud-strategy-poc",
+            "security_rule": [],
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.rg"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.virtual_network",
+      "mode": "managed",
+      "type": "azurerm_private_dns_zone",
+      "name": "default",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/privateDnsZones/cloud-strategy-poc-pdz.postgres.database.azure.com",
+            "max_number_of_record_sets": 25000,
+            "max_number_of_virtual_network_links": 1000,
+            "max_number_of_virtual_network_links_with_registration": 100,
+            "name": "cloud-strategy-poc-pdz.postgres.database.azure.com",
+            "number_of_record_sets": 1,
+            "resource_group_name": "cloud-strategy-poc",
+            "soa_record": [
+              {
+                "email": "azureprivatedns-host.microsoft.com",
+                "expire_time": 2419200,
+                "fqdn": "cloud-strategy-poc-pdz.postgres.database.azure.com.",
+                "host_name": "azureprivatedns.net",
+                "minimum_ttl": 10,
+                "refresh_time": 3600,
+                "retry_time": 300,
+                "serial_number": 1,
+                "tags": {},
+                "ttl": 3600
+              }
+            ],
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.rg",
+            "module.virtual_network.azurerm_network_security_group.default",
+            "module.virtual_network.azurerm_subnet.pg_subnet",
+            "module.virtual_network.azurerm_subnet_network_security_group_association.pg_group_association",
+            "module.virtual_network.azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.virtual_network",
+      "mode": "managed",
+      "type": "azurerm_private_dns_zone_virtual_network_link",
+      "name": "default",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/privateDnsZones/cloud-strategy-poc-pdz.postgres.database.azure.com/virtualNetworkLinks/cloud-strategy-poc-pdzvnetlink.com",
+            "name": "cloud-strategy-poc-pdzvnetlink.com",
+            "private_dns_zone_name": "cloud-strategy-poc-pdz.postgres.database.azure.com",
+            "registration_enabled": false,
+            "resource_group_name": "cloud-strategy-poc",
+            "tags": {},
+            "timeouts": null,
+            "virtual_network_id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.rg",
+            "module.virtual_network.azurerm_network_security_group.default",
+            "module.virtual_network.azurerm_private_dns_zone.default",
+            "module.virtual_network.azurerm_subnet.pg_subnet",
+            "module.virtual_network.azurerm_subnet_network_security_group_association.pg_group_association",
+            "module.virtual_network.azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.virtual_network",
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "aks_pods",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.1.1.0/24"
+            ],
+            "delegation": [],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet/subnets/aks-pods",
+            "name": "aks-pods",
+            "resource_group_name": "cloud-strategy-poc",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [],
+            "timeouts": null,
+            "virtual_network_name": "cloud-strategy-poc-vnet"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.rg",
+            "module.virtual_network.azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.virtual_network",
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "pg_subnet",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.1.2.0/24"
+            ],
+            "delegation": [
+              {
+                "name": "pg-delegation",
+                "service_delegation": [
+                  {
+                    "actions": [
+                      "Microsoft.Network/virtualNetworks/subnets/join/action"
+                    ],
+                    "name": "Microsoft.DBforPostgreSQL/flexibleServers"
+                  }
+                ]
+              }
+            ],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet/subnets/cloud-strategy-poc-pg-subnet",
+            "name": "cloud-strategy-poc-pg-subnet",
+            "resource_group_name": "cloud-strategy-poc",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [],
+            "timeouts": null,
+            "virtual_network_name": "cloud-strategy-poc-vnet"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.rg",
+            "module.virtual_network.azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.virtual_network",
+      "mode": "managed",
+      "type": "azurerm_subnet_network_security_group_association",
+      "name": "pg_group_association",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet/subnets/cloud-strategy-poc-pg-subnet",
+            "network_security_group_id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/networkSecurityGroups/cloud-strategy-poc-nsg",
+            "subnet_id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet/subnets/cloud-strategy-poc-pg-subnet",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.rg",
+            "module.virtual_network.azurerm_network_security_group.default",
+            "module.virtual_network.azurerm_subnet.pg_subnet",
+            "module.virtual_network.azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.virtual_network",
+      "mode": "managed",
+      "type": "azurerm_virtual_network",
+      "name": "vnet",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_space": [
+              "10.1.0.0/16"
+            ],
+            "bgp_community": "",
+            "ddos_protection_plan": [],
+            "dns_servers": [],
+            "edge_zone": "",
+            "flow_timeout_in_minutes": 0,
+            "guid": "30772af0-471e-4d0a-8d8d-c6793d44b458",
+            "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet",
+            "location": "westeurope",
+            "name": "cloud-strategy-poc-vnet",
+            "resource_group_name": "cloud-strategy-poc",
+            "subnet": [
+              {
+                "address_prefix": "10.1.1.0/24",
+                "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet/subnets/aks-pods",
+                "name": "aks-pods",
+                "security_group": ""
+              },
+              {
+                "address_prefix": "10.1.2.0/24",
+                "id": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/virtualNetworks/cloud-strategy-poc-vnet/subnets/cloud-strategy-poc-pg-subnet",
+                "name": "cloud-strategy-poc-pg-subnet",
+                "security_group": "/subscriptions/f49dfc7c-252b-4275-87b3-a524c52ce0dd/resourceGroups/cloud-strategy-poc/providers/Microsoft.Network/networkSecurityGroups/cloud-strategy-poc-nsg"
+              }
+            ],
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.rg"
+          ]
+        }
+      ]
+    }
+  ]
+}

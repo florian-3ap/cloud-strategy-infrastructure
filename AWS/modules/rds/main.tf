@@ -9,7 +9,7 @@ terraform {
 }
 
 locals {
-  username = "acme"
+  username = "psqladmin"
   password = random_password.project_password.result
 }
 
