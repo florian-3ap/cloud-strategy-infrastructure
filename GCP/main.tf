@@ -13,8 +13,8 @@ module "vpc" {
   depends_on = [module.gcp_project.project_apis]
 }
 
-module "gke" {
-  source = "./modules/gke"
+module "k8s_cluster" {
+  source = "./modules/k8s-cluster"
 
   project_id       = var.project_id
   region           = var.region
@@ -44,7 +44,7 @@ module "cloud_sql_user" {
   depends_on = [module.cloud_sql.cloud_sql_instance_name]
 }
 
-module "k8s-application" {
+module "k8s_application" {
   source = "../modules/k8s-application"
 
   show-case-ui-config = {
@@ -60,16 +60,16 @@ module "k8s-application" {
   depends_on = [
     module.cloud_sql,
     module.cloud_sql_user,
-    module.gke.kubernetes_cluster,
-    module.gke.kubernetes_cluster_primary_nodes
+    module.k8s_cluster.kubernetes_cluster,
+    module.k8s_cluster.kubernetes_cluster_primary_nodes
   ]
 }
 
-module "k8s-nginx-ingress" {
+module "k8s_nginx_ingress" {
   source = "../modules/k8s-nginx-ingress"
 
   project_id = var.project_id
   ip_address = module.vpc.ip_address
 
-  depends_on = [module.k8s-application]
+  depends_on = [module.k8s_application]
 }

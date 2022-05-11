@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   provision-gcp-cloud-infrastructure:
-    name: Check GCP Cloud Infrastructure
+    name: Provision GCP Cloud Infrastructure
     runs-on: ubuntu-latest
     env:
       working-directory: ./GCP
@@ -27,6 +27,8 @@ jobs:
         id: init
         run: terraform init
         working-directory: ${{ env.working-directory }}
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -38,10 +40,42 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
   provision-aws-cloud-infrastructure:
-    name: Check AWS Cloud Infrastructure
+    name: Provision AWS Cloud Infrastructure
     runs-on: ubuntu-latest
     env:
       working-directory: ./AWS
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        working-directory: ${{ env.working-directory }}
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: ${{ env.working-directory }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: ${{ env.working-directory }}
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+        working-directory: ${{ env.working-directory }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  provision-azure-cloud-infrastructure:
+    name: Provision Azure Cloud Infrastructure
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./AZ
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -63,6 +97,3 @@ jobs:
         id: apply
         run: terraform apply -auto-approve
         working-directory: ${{ env.working-directory }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
