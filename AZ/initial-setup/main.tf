@@ -36,14 +36,20 @@ resource "azurerm_storage_container" "tf_storage_container" {
   container_access_type = "blob"
 }
 
+data "azuread_client_config" "current" {}
+
 resource "azuread_application" "terraform" {
   display_name = "Terraform"
+  owners       = [data.azuread_client_config.current.object_id]
 }
 
 resource "azuread_service_principal" "tf_service_principal" {
-  application_id = azuread_application.terraform.application_id
+  application_id               = azuread_application.terraform.application_id
+  app_role_assignment_required = false
+  owners                       = [data.azuread_client_config.current.object_id]
 }
 
-resource "azuread_service_principal_password" "tf_service_principal_password" {
-  service_principal_id = azuread_service_principal.tf_service_principal.object_id
+resource "azuread_application_password" "tf_application_password" {
+  display_name          = "terraformgenerated"
+  application_object_id = azuread_application.terraform.object_id
 }

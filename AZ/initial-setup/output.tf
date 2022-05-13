@@ -15,5 +15,5 @@ output "client_id" {
 }
 
 output "client_secret" {
-  value = nonsensitive(azuread_service_principal_password.tf_service_principal_password.value)
+  value = nonsensitive(azuread_application_password.tf_application_password.value)
 }
