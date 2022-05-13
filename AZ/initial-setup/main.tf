@@ -35,3 +35,15 @@ resource "azurerm_storage_container" "tf_storage_container" {
   storage_account_name  = azurerm_storage_account.tf_storage_account.name
   container_access_type = "blob"
 }
+
+resource "azuread_application" "terraform" {
+  display_name = "Terraform"
+}
+
+resource "azuread_service_principal" "tf_service_principal" {
+  application_id = azuread_application.terraform.application_id
+}
+
+resource "azuread_service_principal_password" "tf_service_principal_password" {
+  service_principal_id = azuread_service_principal.tf_service_principal.object_id
+}

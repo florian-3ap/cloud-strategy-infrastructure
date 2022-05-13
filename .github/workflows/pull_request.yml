@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./GCP
+      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,8 +29,6 @@ jobs:
         id: init
         run: terraform init
         working-directory: ${{ env.working-directory }}
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -39,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./AWS
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -52,9 +53,6 @@ jobs:
         id: init
         run: terraform init
         working-directory: ${{ env.working-directory }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -64,6 +62,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./AZ
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
