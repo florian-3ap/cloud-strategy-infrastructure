@@ -1,19 +1,11 @@
 variable "project_id" {
-  description = "Project ID"
-  type        = string
+  type = string
 }
 
 variable "region" {
-  description = "Region"
-  type        = string
+  type = string
 }
 
 variable "zone" {
-  description = "Zone"
-  type        = string
-}
-
-variable "billing_account" {
-  description = "Google Cloud Billing Account"
-  type        = string
+  type = string
 }
