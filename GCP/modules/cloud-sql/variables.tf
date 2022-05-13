@@ -8,11 +8,6 @@ variable "region" {
   type        = string
 }
 
-variable "zone" {
-  description = "Zone"
-  type        = string
-}
-
 variable "database_version" {
   description = "Database Version"
   default     = "POSTGRES_13"

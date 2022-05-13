@@ -30,7 +30,6 @@ module "cloud_sql" {
 
   project_id = var.project_id
   region     = var.region
-  zone       = var.zone
 
   depends_on = [module.gcp_project.project_apis]
 }

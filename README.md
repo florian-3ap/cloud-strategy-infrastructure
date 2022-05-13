@@ -2,38 +2,12 @@
 
 ## GCP Initial Setup
 
-### Create project
-
 ```
-gcloud projects create cloud-strategy-poc --name="Cloud Strategy POC"
-```
+cd GCP/initial-setup
 
-### Link billing account to project
+terraform init
 
-```
-gcloud beta billing projects link cloud-strategy-poc --billing-account $BILLING_ACCOUNT
-```
-
-### Create service account and grant access
-
-```
-gcloud config set core/project cloud-strategy-poc
-
-gcloud iam service-accounts create tf-cicd
-
-gcloud projects add-iam-policy-binding cloud-strategy-poc --member serviceAccount:tf-cicd@cloud-strategy-poc.iam.gserviceaccount.com --role roles/owner
-```
-
-### Creating and downloading the access key
-
-```
-gcloud iam service-accounts keys create access.json --iam-account=tf-cicd@cloud-strategy-poc.iam.gserviceaccount.com
-```
-
-### Create Bucket for storing Terraform State
-
-```
-gsutil mb -p cloud-strategy-poc -c Standard -l europe-west6 -b on gs://cloud-strategy-poc-terraform-state
+terraform apply -var='project_name=Cloud Strategy POC' -var="project_id=cloud-strategy-poc"
 ```
 
 ## AWS Initial Setup
@@ -46,19 +20,10 @@ aws s3api create-bucket --bucket "cloud-strategy-poc-terraform-state" --region "
 
 ## Azure Initial Setup
 
-### Create resource group
+```
+cd AZ/initial-setup
 
-```
-az group create --name cloud-strategy-poc --location westeurope
-```
+terraform init
 
-### Create storage account
-
-```
-az storage account create --resource-group cloud-strategy-poc --name cloud-strategy-poc-terraform-state --sku Standard_LRS --encryption-services blob  
-```
-
-### Create blob container
-```
-az storage container create --name state --account-name cloud-strategy-poc-terraform-state  
+terraform apply -var='project_name=cloud-strategy-poc'
 ```

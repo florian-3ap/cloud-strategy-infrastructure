@@ -1,13 +1,3 @@
-terraform {
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.11.0"
-    }
-  }
-  required_version = ">= 0.14"
-}
-
 resource "random_password" "project_password" {
   length  = 24
   special = true
