@@ -3,7 +3,7 @@ data "azurerm_resource_group" "project_rg" {
 }
 
 module "virtual_network" {
-  source = "./modules/virtual_network"
+  source = "./modules/network"
 
   project_name        = var.project_name
   location            = data.azurerm_resource_group.project_rg.location

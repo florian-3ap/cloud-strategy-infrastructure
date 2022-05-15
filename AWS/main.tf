@@ -4,7 +4,7 @@ locals {
 }
 
 module "vpc" {
-  source = "./modules/vpc"
+  source = "./modules/network"
 
   project_id   = var.project_id
   region       = var.region
@@ -22,7 +22,7 @@ module "k8s_cluster" {
 
   cluster_name = local.cluster_name
   vpc_id       = module.vpc.vpc_id
-  subnets      = module.vpc.private_subnets
+  subnets      = module.vpc.public_subnets
 
   depends_on = [module.vpc]
 }
@@ -33,8 +33,22 @@ module "rds" {
   db_subnet_group_name   = module.vpc.rds_subnet_group_name
   vpc_security_group_ids = [module.security_group.rds_security_group_id]
 
-  depends_on = [module.vpc, module.security_group, module.k8s_cluster]
+  depends_on = [module.vpc, module.security_group]
 }
+
+resource "kubernetes_secret" "db_root_user_secret" {
+  metadata {
+    name = "postgres-root-db-user"
+  }
+
+  data = {
+    username = module.rds.username
+    password = module.rds.password
+  }
+
+  depends_on = [module.rds]
+}
+
 
 module "k8s_application" {
   source = "../modules/k8s-application"
@@ -49,12 +63,14 @@ module "k8s_application" {
 
   depends_on = [module.vpc.ip_address, module.k8s_cluster, module.rds]
 }
+/*
+module "k8s-nginx-ingress" {
+  source = "../modules/k8s-nginx-ingress"
 
-#module "k8s-nginx-ingress" {
-#  source = "../modules/k8s-nginx-ingress"
-#
-#  project_id = var.project_id
-#  ip_address = module.vpc.ip_address
-#
-#  depends_on = [module.vpc.ip_address, module.eks, module.k8s-application]
-#}
+  project_id    = var.project_id
+  ip_address    = module.vpc.ip_address
+  ip_address_id = module.vpc.ip_address_id
+
+  depends_on = [module.vpc.ip_address, module.k8s_cluster, module.k8s_application]
+}
+*/

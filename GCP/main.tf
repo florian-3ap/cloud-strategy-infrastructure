@@ -5,7 +5,7 @@ module "gcp_project" {
 }
 
 module "vpc" {
-  source = "./modules/vpc"
+  source = "./modules/network"
 
   project_id = var.project_id
   region     = var.region
