@@ -67,7 +67,7 @@ resource "kubernetes_deployment" "show-case-ui-deployment" {
 
           env {
             name  = "REACT_APP_BASE_URL"
-            value = "http://${var.show-case-ui-config.base_path}"
+            value = "http://${var.show_case_ui_config.base_path}"
           }
         }
       }
@@ -154,7 +154,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
 
           env {
             name  = "DB_JDBC_URL"
-            value = var.person-management-config.db_jdbc_url
+            value = var.person_management_config.db_jdbc_url
           }
           env {
             name = "DB_USERNAME"
@@ -176,7 +176,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
           }
         }
         dynamic container {
-          for_each = var.cloud_sql_proxy_enabled ? [1] : []
+          for_each = var.cloud_sql_proxy_config.enabled ? [1] : []
           content {
             name  = "cloud-sql-proxy"
             image = "gcr.io/cloudsql-docker/gce-proxy:1.30.0"
@@ -188,7 +188,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
 
             env {
               name  = "CLOUDSQL_INSTANCE"
-              value = "cloud-strategy-poc:europe-west6:${var.cloud_sql_instance_name}"
+              value = "cloud-strategy-poc:europe-west6:${var.cloud_sql_proxy_config.instance_name}"
             }
 
             security_context {

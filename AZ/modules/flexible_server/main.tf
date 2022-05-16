@@ -11,8 +11,8 @@ resource "random_password" "project_password" {
 resource "azurerm_postgresql_flexible_server" "default" {
   count                  = var.type.name == "postgresql" ? 1 : 0
   name                   = "${var.database_name}-server"
-  resource_group_name    = var.resource_group_name
-  location               = var.location
+  resource_group_name    = var.resource_group.name
+  location               = var.resource_group.location
   version                = var.type.version
   delegated_subnet_id    = var.delegated_subnet_id
   private_dns_zone_id    = var.private_dns_zone_id

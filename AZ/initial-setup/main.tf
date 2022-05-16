@@ -20,7 +20,7 @@ resource "random_string" "resource_code" {
 }
 
 resource "azurerm_resource_group" "project_rg" {
-  name     = var.project_name
+  name     = var.project_id
   location = var.location
 }
 

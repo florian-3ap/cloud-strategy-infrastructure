@@ -1,10 +1,12 @@
 variable "project_id" {
-  type = string
+  description = "The ID of the Project"
+  type        = string
 }
 
 variable "google_services" {
-  type    = set(string)
-  default = [
+  description = "List of google services to enable"
+  type        = set(string)
+  default     = [
     "cloudresourcemanager.googleapis.com",
     "serviceusage.googleapis.com",
     "compute.googleapis.com",

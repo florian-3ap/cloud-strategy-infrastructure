@@ -1,26 +1,33 @@
 variable "project_name" {
-  type = string
+  description = "The name of the Project"
+  type        = string
 }
 
 variable "project_id" {
-  type = string
+  description = "The ID of the Project"
+  type        = string
 }
 
 variable "region" {
-  type    = string
-  default = "europe-west6"
+  description = "GCP Region information"
+  type        = string
+  default     = "europe-west6"
 }
 
 variable "zone" {
-  type    = string
-  default = "europe-west6-a"
+  description = "GCP Zone information"
+  type        = string
+  default     = "europe-west6-a"
 }
 
 variable "billing_account" {
-  type    = string
-  default = "01420F-D7D530-A5E354"
+  description = "Billing account for the GCP project"
+  type        = string
+  default     = "01420F-D7D530-A5E354"
 }
 
 variable "org_id" {
-  default = "57744860469"
+  description = "Id od the organization"
+  type        = string
+  default     = "57744860469"
 }

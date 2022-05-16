@@ -1,7 +1,7 @@
 resource "google_container_cluster" "primary" {
   project  = var.project_id
   name     = "${var.project_id}-gke"
-  location = var.zone
+  location = var.location.zone
 
   remove_default_node_pool = true
   initial_node_count       = 1
@@ -19,7 +19,7 @@ resource "google_container_cluster" "primary" {
 resource "google_container_node_pool" "primary_nodes" {
   project    = var.project_id
   name       = "${google_container_cluster.primary.name}-node-pool"
-  location   = var.zone
+  location   = var.location.zone
   cluster    = google_container_cluster.primary.name
   node_count = var.gke_num_nodes
 

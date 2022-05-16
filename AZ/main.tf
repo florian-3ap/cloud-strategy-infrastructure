@@ -1,37 +1,33 @@
-data "azurerm_resource_group" "project_rg" {
-  name = var.project_name
+data "azurerm_resource_group" "rg" {
+  name = var.project_id
 }
 
-module "virtual_network" {
+module "network" {
   source = "./modules/network"
 
-  project_name        = var.project_name
-  location            = data.azurerm_resource_group.project_rg.location
-  resource_group_name = data.azurerm_resource_group.project_rg.name
+  project_id     = var.project_id
+  resource_group = data.azurerm_resource_group.rg
 }
 
 module "k8s_cluster" {
   source = "./modules/k8s-cluster"
 
-  project_name        = var.project_name
-  location            = data.azurerm_resource_group.project_rg.location
-  resource_group_name = data.azurerm_resource_group.project_rg.name
-  vnet_subnet_id      = module.virtual_network.aks_pods_subnet_id
+  project_id     = var.project_id
+  resource_group = data.azurerm_resource_group.rg
+  vnet_subnet_id = module.network.aks_pods_subnet_id
 
-  depends_on = [module.virtual_network]
+  depends_on = [module.network]
 }
 
 module "pg_flexible_server" {
   source = "./modules/flexible_server"
 
-  resource_group_name = data.azurerm_resource_group.project_rg.name
-  location            = data.azurerm_resource_group.project_rg.location
-
   database_name       = "person-management"
-  delegated_subnet_id = module.virtual_network.pg_subnet_id
-  private_dns_zone_id = module.virtual_network.private_dns_zone_id
+  resource_group      = data.azurerm_resource_group.rg
+  delegated_subnet_id = module.network.pg_subnet_id
+  private_dns_zone_id = module.network.private_dns_zone_id
 
-  depends_on = [module.virtual_network]
+  depends_on = [module.network]
 }
 
 resource "kubernetes_secret" "db_root_user_secret" {
@@ -47,14 +43,13 @@ resource "kubernetes_secret" "db_root_user_secret" {
   depends_on = [module.k8s_cluster]
 }
 
-
 module "k8s_application" {
   source = "../modules/k8s-application"
 
-  show-case-ui-config = {
+  show_case_ui_config = {
     base_path = module.k8s_cluster.public_ip
   }
-  person-management-config = {
+  person_management_config = {
     db_jdbc_url = "jdbc:postgresql://${module.pg_flexible_server.database_fqdn}:5432/${module.pg_flexible_server.database_name}?sslmode=require"
   }
 
@@ -64,7 +59,7 @@ module "k8s_application" {
 module "k8s_nginx_ingress" {
   source = "../modules/k8s-nginx-ingress"
 
-  project_id     = var.project_name
+  project_id     = var.project_id
   cloud_provider = "azure"
   ip_address     = module.k8s_cluster.public_ip
 
