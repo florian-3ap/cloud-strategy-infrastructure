@@ -7,8 +7,7 @@ locals {
 }
 
 variable "project_id" {
-  description = "Project ID"
-  type        = string
+  type = string
 }
 
 variable "cloud_provider" {
@@ -21,9 +20,8 @@ variable "cloud_provider" {
 }
 
 variable "ip_address" {
-  description = "IP Address for exposing Ingress"
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "eip_allocations" {

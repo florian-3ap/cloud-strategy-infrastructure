@@ -16,7 +16,6 @@ variable "cloud_sql_proxy_enabled" {
 }
 
 variable "cloud_sql_instance_name" {
-  description = "Name of cloud sql instance"
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
