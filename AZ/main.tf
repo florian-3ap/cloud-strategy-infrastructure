@@ -48,7 +48,7 @@ resource "kubernetes_secret" "db_root_user_secret" {
 }
 
 
-module "k8s-application" {
+module "k8s_application" {
   source = "../modules/k8s-application"
 
   show-case-ui-config = {
@@ -61,12 +61,12 @@ module "k8s-application" {
   depends_on = [module.pg_flexible_server, module.k8s_cluster]
 }
 
-module "k8s-nginx-ingress" {
+module "k8s_nginx_ingress" {
   source = "../modules/k8s-nginx-ingress"
 
   project_id     = var.project_name
   cloud_provider = "azure"
   ip_address     = module.k8s_cluster.public_ip
 
-  depends_on = [module.k8s_cluster]
+  depends_on = [module.k8s_application]
 }

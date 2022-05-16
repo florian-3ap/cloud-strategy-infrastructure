@@ -54,7 +54,7 @@ module "k8s_application" {
   source = "../modules/k8s-application"
 
   show-case-ui-config = {
-    base_path = module.vpc.aws_eips[0]
+    base_path = module.vpc.public_ips[0]
   }
 
   person-management-config = {
@@ -65,13 +65,13 @@ module "k8s_application" {
 }
 
 
-module "k8s-nginx-ingress" {
+module "k8s_nginx_ingress" {
   source = "../modules/k8s-nginx-ingress"
 
   project_id = var.project_id
 
   cloud_provider  = "aws"
-  eip_allocations = module.vpc.aws_eips
+  eip_allocations = module.vpc.aws_eip_ids
   subnets         = module.vpc.public_subnets
 
   depends_on = [module.vpc, module.k8s_cluster]

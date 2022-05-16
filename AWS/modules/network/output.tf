@@ -2,8 +2,12 @@ output "vpc_id" {
   value = module.vpc.vpc_id
 }
 
-output "aws_eips" {
+output "aws_eip_ids" {
   value = aws_eip.nat.*.id
+}
+
+output "public_ips" {
+  value = aws_eip.nat.*.public_ip
 }
 
 output "public_subnets" {
