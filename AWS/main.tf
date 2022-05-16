@@ -54,23 +54,25 @@ module "k8s_application" {
   source = "../modules/k8s-application"
 
   show-case-ui-config = {
-    base_path = module.vpc.ip_address
+    base_path = module.vpc.aws_eips[0]
   }
 
   person-management-config = {
     db_jdbc_url = "jdbc:postgresql://${module.rds.rds_address}:${module.rds.port}/${module.rds.db_name}"
   }
 
-  depends_on = [module.vpc.ip_address, module.k8s_cluster, module.rds]
+  depends_on = [module.vpc, module.k8s_cluster, module.rds]
 }
-/*
+
+
 module "k8s-nginx-ingress" {
   source = "../modules/k8s-nginx-ingress"
 
-  project_id    = var.project_id
-  ip_address    = module.vpc.ip_address
-  ip_address_id = module.vpc.ip_address_id
+  project_id = var.project_id
 
-  depends_on = [module.vpc.ip_address, module.k8s_cluster, module.k8s_application]
+  cloud_provider  = "aws"
+  eip_allocations = module.vpc.aws_eips
+  subnets         = module.vpc.public_subnets
+
+  depends_on = [module.vpc, module.k8s_cluster]
 }
-*/

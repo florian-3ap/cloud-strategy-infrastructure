@@ -68,7 +68,9 @@ module "k8s_nginx_ingress" {
   source = "../modules/k8s-nginx-ingress"
 
   project_id = var.project_id
-  ip_address = module.vpc.ip_address
+
+  cloud_provider = "gcp"
+  ip_address     = module.vpc.ip_address
 
   depends_on = [module.k8s_application]
 }

@@ -64,8 +64,9 @@ module "k8s-application" {
 module "k8s-nginx-ingress" {
   source = "../modules/k8s-nginx-ingress"
 
-  project_id = var.project_name
-  ip_address = module.k8s_cluster.public_ip
+  project_id     = var.project_name
+  cloud_provider = "azure"
+  ip_address     = module.k8s_cluster.public_ip
 
   depends_on = [module.k8s_cluster]
 }
