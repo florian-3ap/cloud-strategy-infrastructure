@@ -19,7 +19,7 @@ cd AWS/initial-setup
 
 terraform init
 
-terraform apply -var='project_name=Cloud Strategy POC'
+terraform apply -var="project_id=cloud-strategy-poc"
 ```
 
 ## Azure Initial Setup
