@@ -3,6 +3,5 @@ output "kubernetes_cluster" {
 }
 
 output "kubernetes_cluster_primary_nodes" {
-  value       = google_container_node_pool.primary_nodes
-  description = "GKE cluster primary nodes"
+  value = google_container_node_pool.primary_nodes
 }

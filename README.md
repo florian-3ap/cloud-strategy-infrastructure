@@ -15,7 +15,11 @@ terraform apply -var='project_name=Cloud Strategy POC' -var="project_id=cloud-st
 ### Create Bucket for storing Terraform State
 
 ```
-aws s3api create-bucket --bucket "cloud-strategy-poc-terraform-state" --region "eu-central-1" --create-bucket-configuration LocationConstraint="eu-central-1"
+cd AWS/initial-setup
+
+terraform init
+
+terraform apply -var="project_id=cloud-strategy-poc"
 ```
 
 ## Azure Initial Setup

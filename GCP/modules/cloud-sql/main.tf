@@ -11,10 +11,17 @@ resource "google_sql_database_instance" "master" {
 
   settings {
     tier              = var.postgres_machine_type
-    availability_type = "ZONAL"
+    availability_type = var.availability_type
+
+    maintenance_window {
+      day  = 6
+      hour = 23
+    }
 
     backup_configuration {
-      enabled = false
+      enabled    = var.backup_enabled
+      start_time = var.backup_start_time
+      location   = var.region
     }
   }
 }

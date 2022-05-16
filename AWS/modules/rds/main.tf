@@ -23,15 +23,3 @@ resource "aws_db_instance" "postgres_db_instance" {
   publicly_accessible    = true
   skip_final_snapshot    = true
 }
-
-resource "kubernetes_secret" "db_root_user_secret" {
-  metadata {
-    name = "postgres-root-db-user"
-  }
-
-  data = {
-    username = local.username
-    password = local.password
-  }
-}
-

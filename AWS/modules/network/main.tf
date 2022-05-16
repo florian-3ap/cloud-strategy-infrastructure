@@ -2,11 +2,12 @@ data "aws_availability_zones" "available" {}
 
 locals {
   public_subnets   = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
-  private_subnets  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   database_subnets = ["10.0.21.0/24", "10.0.22.0/24"]
 }
 
 resource "aws_eip" "nat" {
+  count = 3
+
   vpc = true
 }
 
@@ -19,13 +20,10 @@ module "vpc" {
 
   azs              = ["${var.region}a", "${var.region}b", "${var.region}c"]
   public_subnets   = local.public_subnets
-  private_subnets  = local.private_subnets
   database_subnets = local.database_subnets
 
-  enable_nat_gateway  = true
-  single_nat_gateway  = true
-  reuse_nat_ips       = true
-  external_nat_ip_ids = "${aws_eip.nat.*.id}"
+  enable_nat_gateway = false
+  single_nat_gateway = false
 
   create_database_subnet_group           = true
   create_database_subnet_route_table     = true
@@ -41,11 +39,6 @@ module "vpc" {
   public_subnet_tags = {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                    = "1"
-  }
-
-  private_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = "1"
   }
 }
 

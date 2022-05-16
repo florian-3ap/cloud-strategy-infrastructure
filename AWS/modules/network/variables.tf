@@ -3,6 +3,9 @@ variable "project_id" {
 }
 
 variable "region" {
-  type    = string
-  default = "eu-central-1"
+  type = string
+}
+
+variable "cluster_name" {
+  type = string
 }
