@@ -14,5 +14,5 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "tf_state_bucket" {
-  bucket = "${var.project_id}-state"
+  bucket = "${var.project_name}-state"
 }
