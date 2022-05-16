@@ -1,17 +1,15 @@
-variable "resource_group_name" {
-  type = string
-}
-
-variable "location" {
-  type = string
+variable "resource_group" {
+  description = "Resource group of the project"
 }
 
 variable "database_name" {
-  type = string
+  description = "Name of the database instance"
+  type        = string
 }
 
 variable "type" {
-  type = object({
+  description = "Type of the flexible server"
+  type        = object({
     name = string
     version : string
   })
@@ -22,21 +20,25 @@ variable "type" {
 }
 
 variable "delegated_subnet_id" {
-  type = string
+  description = "The id of the VPC subnet which the cluster connects to"
+  type        = string
 }
 
 variable "private_dns_zone_id" {
-  type = string
+  description = "Private DNS zone id of the flexible server"
+  type        = string
 }
 
 variable "storage_mb" {
-  type    = number
-  default = 32768
+  description = "Size of the database storage in MB"
+  type        = number
+  default     = 32768
 }
 
 variable "machine_type" {
-  type    = string
-  default = "GP_Standard_D2s_v3"
+  description = "Machine type of the database instance"
+  type        = string
+  default     = "GP_Standard_D2s_v3"
 }
 
 variable "zone" {

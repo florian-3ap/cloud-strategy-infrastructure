@@ -7,8 +7,7 @@ locals {
 
 resource "aws_eip" "nat" {
   count = 3
-
-  vpc = true
+  vpc   = true
 }
 
 module "vpc" {
@@ -31,15 +30,6 @@ module "vpc" {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-
-  tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-  }
-
-  public_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                    = "1"
-  }
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {

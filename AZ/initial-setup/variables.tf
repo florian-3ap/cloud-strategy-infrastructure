@@ -1,8 +1,10 @@
-variable "project_name" {
-  type = string
+variable "project_id" {
+  description = "Name of the project"
+  type        = string
 }
 
 variable "location" {
-  type    = string
-  default = "West Europe"
+  description = "AWS location information"
+  type        = string
+  default     = "West Europe"
 }

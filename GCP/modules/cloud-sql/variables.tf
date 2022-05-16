@@ -1,32 +1,39 @@
 variable "project_id" {
-  type = string
+  description = "Name of the project"
+  type        = string
 }
 
 variable "region" {
-  type = string
+  description = "The region the GCP resources should be created in"
+  type        = string
 }
 
 variable "database_version" {
-  type    = string
-  default = "POSTGRES_13"
+  description = "Database version"
+  type        = string
+  default     = "POSTGRES_13"
 }
 
 variable "postgres_machine_type" {
-  type    = string
-  default = "db-f1-micro"
+  description = "Database machine type"
+  type        = string
+  default     = "db-f1-micro"
 }
 
 variable "availability_type" {
-  type    = string
-  default = "ZONAL"
+  description = "Availability type of the database instance"
+  type        = string
+  default     = "ZONAL"
 }
 
 variable "backup_enabled" {
-  type    = bool
-  default = false
+  description = "Database backup enabled"
+  type        = bool
+  default     = false
 }
 
 variable "backup_start_time" {
-  type    = string
-  default = "01:00"
+  description = "Start time of the database backup"
+  type        = string
+  default     = "01:00"
 }

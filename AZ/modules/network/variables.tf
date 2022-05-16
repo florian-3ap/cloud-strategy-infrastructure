@@ -1,11 +1,8 @@
-variable "project_name" {
-  type = string
+variable "project_id" {
+  description = "Name of the project"
+  type        = string
 }
 
-variable "location" {
-  type = string
-}
-
-variable "resource_group_name" {
-  type = string
+variable "resource_group" {
+  description = "Resource group of the project"
 }

@@ -1,1 +1,1 @@
-project_name = "cloud-strategy-poc"
+project_id = "cloud-strategy-poc"

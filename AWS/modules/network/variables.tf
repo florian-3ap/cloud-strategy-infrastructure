@@ -1,11 +1,9 @@
 variable "project_id" {
-  type = string
+  description = "Name of the project"
+  type        = string
 }
 
 variable "region" {
-  type = string
-}
-
-variable "cluster_name" {
-  type = string
+  description = "AWS Region information"
+  type        = string
 }

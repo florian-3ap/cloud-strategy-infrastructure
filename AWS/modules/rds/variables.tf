@@ -1,7 +1,9 @@
 variable "db_subnet_group_name" {
-  type = string
+  description = "The subnet group name for the rds instance"
+  type        = string
 }
 
 variable "vpc_security_group_ids" {
-  type = list(string)
+  description = "List of VPC security group ids"
+  type        = list(string)
 }

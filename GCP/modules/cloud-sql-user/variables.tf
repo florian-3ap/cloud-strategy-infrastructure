@@ -1,7 +1,9 @@
 variable "project_id" {
-  type = string
+  description = "Name of the project"
+  type        = string
 }
 
 variable "cloud_sql_instance_name" {
-  type = string
+  description = "Name of the cloud sql instance"
+  type        = string
 }

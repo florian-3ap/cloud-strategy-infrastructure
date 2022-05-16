@@ -1,7 +1,7 @@
 provider "google" {
   project = var.project_id
-  region  = var.region
-  zone    = var.zone
+  region  = var.location.region
+  zone    = var.location.zone
 }
 
 data "google_client_config" "default" {

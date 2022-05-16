@@ -1,16 +1,19 @@
-variable "cluster_name" {
-  type = string
+variable "project_id" {
+  description = "Name of the project"
+  type        = string
 }
 
 variable "cluster_version" {
-  type    = string
-  default = "1.22"
+  description = "Version of the kubernetes cluster"
+  type        = string
+  default     = "1.22"
 }
 
 variable "vpc_id" {
-  type = string
+  description = "VPC id where the cluster and workers will be deployed."
+  type        = string
 }
 
 variable "subnets" {
-  description = "VPC subnets"
+  description = "A list of subnets to place the EKS cluster and workers within."
 }
