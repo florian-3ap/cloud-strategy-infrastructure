@@ -1,10 +1,10 @@
 variable "project_name" {
-  description = "Name of the project"
+  description = "The name of the Project"
   type        = string
 }
 
 variable "project_id" {
-  description = "Name of the project"
+  description = "The ID of the Project"
   type        = string
 }
 

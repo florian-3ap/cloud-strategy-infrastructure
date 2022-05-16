@@ -7,7 +7,7 @@ locals {
 }
 
 variable "project_id" {
-  description = "Name of the project"
+  description = "The ID of the Project"
   type        = string
 }
 
