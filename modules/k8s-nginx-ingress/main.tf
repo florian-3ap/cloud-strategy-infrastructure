@@ -35,14 +35,6 @@ locals {
   ]
 }
 
-resource "helm_release" "ingress_nginx_chart" {
-  name       = "ingress-nginx"
-  repository = "https://kubernetes.github.io/ingress-nginx/"
-  chart      = "ingress-nginx"
-  version    = "4.1.0"
-  values     = local.values
-}
-
 resource "kubectl_manifest" "ingress_configmap" {
   yaml_body = <<YAML
 apiVersion: v1
@@ -63,8 +55,16 @@ data:
   log-format-upstream: '{"message": "$request $status", "status": "$status", "requestTime": "$request_time", "requestLength": "$request_length", "responseLength": "$upstream_response_length", "nodeIp" : "$upstream_addr", "referer": "$http_referer", "userAgent": "$http_user_agent", "remoteIp": "$remote_addr", "service": "$proxy_upstream_name"}'
   server-tokens: "false"
 YAML
+}
 
-  depends_on = [helm_release.ingress_nginx_chart]
+resource "helm_release" "ingress_nginx_chart" {
+  name       = "ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx/"
+  chart      = "ingress-nginx"
+  version    = "4.1.0"
+  values     = local.values
+
+  depends_on = [kubectl_manifest.ingress_configmap]
 }
 
 resource "kubernetes_ingress_v1" "ingress" {
@@ -101,8 +101,7 @@ resource "kubernetes_ingress_v1" "ingress" {
         }
       }
     }
-
   }
 
-  depends_on = [kubectl_manifest.ingress_configmap]
+  depends_on = [helm_release.ingress_nginx_chart]
 }
