@@ -8,6 +8,21 @@ terraform {
   required_version = ">= 0.14"
 }
 
+locals {
+  db_kubernetes_secret_name = "postgres-root-db-user"
+}
+
+resource "kubernetes_secret" "db_user_secret" {
+  metadata {
+    name = local.db_kubernetes_secret_name
+  }
+
+  data = {
+    username = var.db_username
+    password = var.db_password
+  }
+}
+
 resource "kubernetes_deployment" "show-case-ui-deployment" {
   metadata {
     name = "show-case-ui"
@@ -156,7 +171,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
             name = "DB_USERNAME"
             value_from {
               secret_key_ref {
-                name = "postgres-root-db-user"
+                name = local.db_kubernetes_secret_name
                 key  = "username"
               }
             }
@@ -165,7 +180,7 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
             name = "DB_PASSWORD"
             value_from {
               secret_key_ref {
-                name = "postgres-root-db-user"
+                name = local.db_kubernetes_secret_name
                 key  = "password"
               }
             }
@@ -195,6 +210,8 @@ resource "kubernetes_deployment" "person-management-service-deployment" {
       }
     }
   }
+
+  depends_on = [kubernetes_secret.db_user_secret]
 }
 
 resource "kubernetes_service" "person-management-service" {

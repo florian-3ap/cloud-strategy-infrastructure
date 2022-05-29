@@ -45,6 +45,9 @@ module "cloud_sql_user" {
 module "k8s_application" {
   source = "../modules/k8s-application"
 
+  db_username = module.cloud_sql_user.username
+  db_password = module.cloud_sql_user.password
+
   show_case_ui_config = {
     base_path = module.network.ip_address
   }
