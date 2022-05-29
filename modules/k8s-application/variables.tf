@@ -1,3 +1,13 @@
+variable "db_username" {
+  description = "The database username"
+  type        = string
+}
+
+variable "db_password" {
+  description = "The database password"
+  type        = string
+}
+
 variable "show_case_ui_config" {
   description = "Configuration of the show-case-ui service"
   type        = object({

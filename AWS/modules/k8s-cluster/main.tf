@@ -15,8 +15,8 @@ module "eks" {
 
   worker_groups = [
     {
-      instance_type        = "t2.small"
-      asg_desired_capacity = 1
+      instance_type        = var.worker_group_instance_Type
+      asg_desired_capacity = var.worker_group_count
     }
   ]
 }

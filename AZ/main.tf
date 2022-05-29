@@ -30,24 +30,14 @@ module "pg_flexible_server" {
   depends_on = [module.network]
 }
 
-resource "kubernetes_secret" "db_root_user_secret" {
-  metadata {
-    name = "postgres-root-db-user"
-  }
-
-  data = {
-    username = module.pg_flexible_server.administrator_login
-    password = module.pg_flexible_server.administrator_password
-  }
-
-  depends_on = [module.k8s_cluster]
-}
-
 module "k8s_application" {
   source = "../modules/k8s-application"
 
+  db_username = module.pg_flexible_server.administrator_login
+  db_password = module.pg_flexible_server.administrator_password
+
   show_case_ui_config = {
-    base_path = module.k8s_cluster.public_ip
+    base_path = module.network.public_ip
   }
   person_management_config = {
     db_jdbc_url = "jdbc:postgresql://${module.pg_flexible_server.database_fqdn}:5432/${module.pg_flexible_server.database_name}?sslmode=require"
@@ -61,7 +51,7 @@ module "k8s_nginx_ingress" {
 
   project_id     = var.project_id
   cloud_provider = "azure"
-  ip_address     = module.k8s_cluster.public_ip
+  ip_address     = module.network.public_ip
 
   depends_on = [module.k8s_application]
 }

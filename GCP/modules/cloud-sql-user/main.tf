@@ -9,14 +9,3 @@ resource "google_sql_user" "project_user" {
   name     = "${var.project_id}-db"
   password = random_password.project_password.result
 }
-
-resource "kubernetes_secret" "db_root_user_secret" {
-  metadata {
-    name = "postgres-root-db-user"
-  }
-
-  data = {
-    username = google_sql_user.project_user.name
-    password = google_sql_user.project_user.password
-  }
-}

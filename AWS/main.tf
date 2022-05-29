@@ -1,3 +1,7 @@
+locals {
+  db_name = "personmanagement"
+}
+
 module "network" {
   source = "./modules/network"
 
@@ -24,27 +28,18 @@ module "k8s_cluster" {
 module "rds" {
   source = "./modules/rds"
 
+  db_name                = local.db_name
   db_subnet_group_name   = module.network.rds_subnet_group_name
   vpc_security_group_ids = [module.security_group.rds_security_group_id]
 
   depends_on = [module.network, module.security_group]
 }
 
-resource "kubernetes_secret" "db_root_user_secret" {
-  metadata {
-    name = "postgres-root-db-user"
-  }
-
-  data = {
-    username = module.rds.username
-    password = module.rds.password
-  }
-
-  depends_on = [module.rds]
-}
-
 module "k8s_application" {
   source = "../modules/k8s-application"
+
+  db_username = module.rds.username
+  db_password = module.rds.password
 
   show_case_ui_config = {
     base_path = module.network.public_ips[0]

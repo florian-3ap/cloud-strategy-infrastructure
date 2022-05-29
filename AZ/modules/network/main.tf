@@ -63,3 +63,12 @@ resource "azurerm_private_dns_zone_virtual_network_link" "default" {
 
   depends_on = [azurerm_private_dns_zone.default, azurerm_virtual_network.vnet]
 }
+
+resource "azurerm_public_ip" "nginx_ingress" {
+  name                = "nginx_ingress_public_ip"
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  domain_name_label   = var.project_id
+  location            = var.resource_group.location
+  resource_group_name = var.resource_group.name
+}
