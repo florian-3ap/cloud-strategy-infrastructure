@@ -13,7 +13,3 @@ output "pg_subnet_id" {
 output "private_dns_zone_id" {
   value = azurerm_private_dns_zone.default.id
 }
-
-output "public_ip" {
-  value = azurerm_public_ip.nginx_ingress.ip_address
-}

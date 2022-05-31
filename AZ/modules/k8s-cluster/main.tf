@@ -15,3 +15,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
 }
+
+resource "azurerm_public_ip" "nginx_ingress" {
+  name                = "nginx_ingress_public_ip"
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  domain_name_label   = var.project_id
+  location            = azurerm_kubernetes_cluster.aks.location
+  resource_group_name = azurerm_kubernetes_cluster.aks.node_resource_group
+
+  depends_on = [azurerm_kubernetes_cluster.aks]
+}
