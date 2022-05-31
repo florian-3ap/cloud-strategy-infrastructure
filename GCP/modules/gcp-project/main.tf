@@ -1,7 +1,3 @@
-data "google_project" "project" {
-  project_id = var.project_id
-}
-
 resource "google_project_service" "gcp_services" {
   project  = var.project_id
   for_each = toset([
@@ -9,8 +5,6 @@ resource "google_project_service" "gcp_services" {
     "serviceusage.googleapis.com"
   ])
   service = each.key
-
-  depends_on = [data.google_project.project]
 }
 
 resource "google_project_service" "project_apis" {
