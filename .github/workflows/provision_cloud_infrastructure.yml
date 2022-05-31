@@ -34,8 +34,12 @@ jobs:
         working-directory: ${{ env.working-directory }}
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve
+        run: |
+          echo ${GOOGLE_CREDENTIALS} >> /tmp/account.json
+          terraform apply -auto-approve
         working-directory: ${{ env.working-directory }}
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/account.json
   provision-aws-cloud-infrastructure:
     name: Provision AWS Cloud Infrastructure
     runs-on: ubuntu-latest
